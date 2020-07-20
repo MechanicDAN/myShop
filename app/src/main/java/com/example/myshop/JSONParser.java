@@ -3,7 +3,6 @@ package com.example.myshop;
 import android.content.Context;
 
 
-import com.example.myshop.activity.LmActivity;
 import com.example.myshop.item.ManagerItem;
 import com.example.myshop.item.PurchasesItem;
 import com.google.gson.Gson;

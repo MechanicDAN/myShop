@@ -2,6 +2,8 @@ package com.example.myshop.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +40,25 @@ public class ListActivity extends AppCompatActivity implements ListDialog.Exampl
         Bundle arguments = getIntent().getExtras();
         currentManager = arguments.getInt("current");
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.list_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.list);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.list:
+                        break;
+                    case R.id.purchase:
+                        startActivity(new Intent(getApplicationContext(),PurchasesActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
         createListArrayList();
         buildRecyclerView();
 
@@ -49,6 +70,7 @@ public class ListActivity extends AppCompatActivity implements ListDialog.Exampl
         try{
             JSONParser.saveList(this, listArrayList, currentManager);
         }catch (Exception ignored){}
+        finish();
         super.onPause();
     }
 
@@ -164,6 +186,7 @@ public class ListActivity extends AppCompatActivity implements ListDialog.Exampl
         Intent intent = new Intent(this, PurchasesActivity.class);
         JSONParser.save(this,listArrayList,true);
         startActivity(intent);
+        finish();
     }
 }
 

@@ -35,15 +35,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.example.myshop.activity.LmActivity">
-            <intent-filter>
-                <action android:name="com.example.myshop.LmActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>

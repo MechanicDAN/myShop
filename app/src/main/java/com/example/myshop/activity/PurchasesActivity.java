@@ -1,7 +1,10 @@
 package com.example.myshop.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,18 +43,39 @@ public class PurchasesActivity extends AppCompatActivity implements PurchasesDia
 
         getSupportActionBar().setTitle("Корзина");
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.purchase_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.purchase);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.list:
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.purchase:
+                        break;
+                }
+                return false;
+            }
+        });
+
         createPurchasesList();
         buildRecyclerView();
         setCurrentSum();
 
         insertButtons();
     }
+
     @Override
     protected void onPause() {
         try{
             JSONParser.save(this, purchasesList,true);
         }catch (Exception ignored){}
         super.onPause();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
